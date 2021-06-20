@@ -12,7 +12,7 @@ require (
 	github.com/astaxie/beego v1.12.3
 	github.com/stretchr/testify v1.7.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.20.0
-	go.opentelemetry.io/contrib/propagators v0.20.0
+	go.opentelemetry.io/contrib/propagators v0.21.0
 	go.opentelemetry.io/otel v0.20.0
 	go.opentelemetry.io/otel/metric v0.20.0
 	go.opentelemetry.io/otel/oteltest v0.20.0
