@@ -10,8 +10,9 @@ github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.9.5 h1:g1ITJ9i9
 github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.9.5/go.mod h1:oehQLbMQkppKLXvpx/1Eo0X47Fe+0971DXC9UjGnKcI=
 github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.7.12 h1:yFvvaM+8B3HQzrG74t6fGDQtcKS83sL2PqOG6VCd3kE=
 github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.7.12/go.mod h1:kYafXnLWK/6IHBRzbQ3HI7Py1ayiYEdb8hxNI9fNpO4=
-github.com/aws/smithy-go v1.12.1 h1:yQRC55aXN/y1W10HgwHle01DRuV9Dpf31iGkotjt3Ag=
 github.com/aws/smithy-go v1.12.1/go.mod h1:Tg+OJXh4MB2R/uN61Ko2f6hTZwB/ZYGOtib8J3gBHzA=
+github.com/aws/smithy-go v1.13.2 h1:TBLKyeJfXTrTXRHmsv4qWt9IQGYyWThLYaJWSahTOGE=
+github.com/aws/smithy-go v1.13.2/go.mod h1:Tg+OJXh4MB2R/uN61Ko2f6hTZwB/ZYGOtib8J3gBHzA=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
