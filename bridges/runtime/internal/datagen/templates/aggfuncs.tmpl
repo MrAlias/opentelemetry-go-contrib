@@ -1,0 +1,107 @@
+{{ define "AggregationFunc" -}}
+{{ template "attrMap" .Attrs }}
+return func(agg *metricdata.Aggregation, t time.Time, samples []*metrics.Sample) error {
+	if agg == nil {
+		return errors.New("nil aggregation")
+	}
+	var err error
+{{ if eq .Kind.Agg 1 -}}
+	{{- include "Sum" . | indent 1 }}
+{{- else if eq .Kind.Agg 2 -}}
+	{{- include "Gauge" . | indent 1 }}
+{{- else if eq .Kind.Agg 3 -}}
+	{{- include "Histogram" . | indent 1 }}
+{{- end }}
+	return err
+}
+{{- end }}
+
+{{ define "Sum" -}}
+sum, _ := (*agg).(metricdata.Sum[{{ .Kind.Num }}])
+sum.Temporality = metricdata.CumulativeTemporality
+sum.IsMonotonic = {{ .Kind.Mono }}
+sum.DataPoints = reset(sum.DataPoints, 0, len(samples))
+for _, s := range samples {
+	a, ok := attrMap[s.Name]
+	if !ok {
+		err = errors.Join(err, fmt.Errorf(
+			"missing attribute: %s", s.Name,
+		))
+	}
+	sum.DataPoints = append(sum.DataPoints, metricdata.DataPoint[{{ .Kind.Num }}]{
+		StartTime:  start,
+		Time:       t,
+		Attributes: a,
+		Value:      {{ if eq .Kind.Num "int64" -}}
+			int64(s.Value.Uint64()),
+		{{- else -}}
+			s.Value.Float64(),
+		{{- end }}
+	})
+}
+*agg = sum
+{{- end }}
+
+{{ define "Gauge" -}}
+gauge, _ := (*agg).(metricdata.Gauge[{{ .Kind.Num }}])
+gauge.DataPoints = reset(gauge.DataPoints, 0, len(samples))
+for _, s := range samples {
+	a, ok := attrMap[s.Name]
+	if !ok {
+		err = errors.Join(err, fmt.Errorf(
+			"missing attribute: %s", s.Name,
+		))
+	}
+	gauge.DataPoints = append(gauge.DataPoints, metricdata.DataPoint[{{ .Kind.Num }}]{
+		Time:       t,
+		Attributes: a,
+		Value:      {{ if eq .Kind.Num "int64" -}}
+			int64(s.Value.Uint64()),
+		{{- else -}}
+			s.Value.Float64(),
+		{{- end }}
+	})
+}
+*agg = gauge
+{{- end }}
+
+{{ define "Histogram" -}}
+hist, _ := (*agg).(metricdata.Histogram[float64])
+hist.Temporality = metricdata.CumulativeTemporality
+hist.DataPoints = reset(hist.DataPoints, 0, len(samples))
+for _, s := range samples {
+	a, ok := attrMap[s.Name]
+	if !ok {
+		err = errors.Join(err, fmt.Errorf(
+			"missing attribute: %s", s.Name,
+		))
+	}
+	h := s.Value.Float64Histogram()
+	bounds, bucketCounts := buckets2Bounds(h.Buckets, h.Counts)
+	hist.DataPoints = append(hist.DataPoints, metricdata.HistogramDataPoint[float64]{
+		StartTime:    start,
+		Time:         t,
+		Attributes:   a,
+		Count:        sum(h.Counts),
+		Bounds:       bounds,
+		BucketCounts: bucketCounts,
+	})
+}
+*agg = hist
+{{- end }}
+
+{{ define "attrMap" -}}
+attrMap := map[string]attribute.Set{
+{{- range . }}
+	{{- if .Attr }}
+	"{{ .RuntimeName }}": attribute.NewSet(
+		{{- range .Attr }}
+		{{ attrStr . }},
+		{{- end }}
+	),
+	{{- else }}
+	"{{ .RuntimeName }}": attribute.NewSet(),
+	{{- end }}
+{{- end }}
+}
+{{- end }}
