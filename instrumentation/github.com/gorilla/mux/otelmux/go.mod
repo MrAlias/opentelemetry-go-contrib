@@ -3,6 +3,7 @@ module go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmu
 go 1.23.0
 
 require (
+	github.com/MrAlias/semconv-go v0.0.0-20250428185649-6433e8af74af
 	github.com/felixge/httpsnoop v1.0.4
 	github.com/gorilla/mux v1.8.1
 	github.com/stretchr/testify v1.10.0

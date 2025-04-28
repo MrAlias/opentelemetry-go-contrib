@@ -13,6 +13,7 @@ require (
 )
 
 require (
+	github.com/MrAlias/semconv-go v0.0.0-20250428185649-6433e8af74af // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect

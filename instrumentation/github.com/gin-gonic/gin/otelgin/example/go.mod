@@ -17,6 +17,7 @@ require (
 )
 
 require (
+	github.com/MrAlias/semconv-go v0.0.0-20250428185649-6433e8af74af // indirect
 	github.com/bytedance/sonic v1.13.2 // indirect
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect

@@ -1,3 +1,5 @@
+github.com/MrAlias/semconv-go v0.0.0-20250428185649-6433e8af74af h1:R0KOkodD1uPzFp7TlN8RvR7d8HRNDVD2ezZJukjhilo=
+github.com/MrAlias/semconv-go v0.0.0-20250428185649-6433e8af74af/go.mod h1:WttzAU035NFUz87x02joKWkfKgjA5CkcYPIduTRGHNI=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/emicklei/go-restful/v3 v3.12.2 h1:DhwDP0vY3k8ZzE0RunuJy8GhNpPL6zqLkDf9B/a0/xU=

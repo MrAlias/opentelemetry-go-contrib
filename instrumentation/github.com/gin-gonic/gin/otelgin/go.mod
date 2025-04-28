@@ -3,6 +3,7 @@ module go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otel
 go 1.23.0
 
 require (
+	github.com/MrAlias/semconv-go v0.0.0-20250428185649-6433e8af74af
 	github.com/gin-gonic/gin v1.10.0
 	github.com/stretchr/testify v1.10.0
 	go.opentelemetry.io/otel v1.35.0

@@ -16,6 +16,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/MrAlias/semconv-go/httpconv"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -533,9 +534,9 @@ func TestMetrics(t *testing.T) {
 			}
 
 			metricdatatest.AssertEqual(t, metricdata.Metrics{
-				Name:        "http.server.request.body.size",
-				Description: "Size of HTTP server request bodies.",
-				Unit:        "By",
+				Name:        httpconv.ServerRequestBodySize{}.Name(),
+				Description: httpconv.ServerRequestBodySize{}.Description(),
+				Unit:        httpconv.ServerRequestBodySize{}.Unit(),
 				Data: metricdata.Histogram[int64]{
 					Temporality: metricdata.CumulativeTemporality,
 					DataPoints: []metricdata.HistogramDataPoint[int64]{
@@ -547,9 +548,9 @@ func TestMetrics(t *testing.T) {
 			}, sm.Metrics[0], metricdatatest.IgnoreTimestamp(), metricdatatest.IgnoreValue(), metricdatatest.IgnoreExemplars())
 
 			metricdatatest.AssertEqual(t, metricdata.Metrics{
-				Name:        "http.server.response.body.size",
-				Description: "Size of HTTP server response bodies.",
-				Unit:        "By",
+				Name:        httpconv.ServerResponseBodySize{}.Name(),
+				Description: httpconv.ServerResponseBodySize{}.Description(),
+				Unit:        httpconv.ServerResponseBodySize{}.Unit(),
 				Data: metricdata.Histogram[int64]{
 					Temporality: metricdata.CumulativeTemporality,
 					DataPoints: []metricdata.HistogramDataPoint[int64]{
@@ -558,12 +559,12 @@ func TestMetrics(t *testing.T) {
 						},
 					},
 				},
-			}, sm.Metrics[1], metricdatatest.IgnoreTimestamp(), metricdatatest.IgnoreValue(), metricdatatest.IgnoreExemplars())
+			}, sm.Metrics[2], metricdatatest.IgnoreTimestamp(), metricdatatest.IgnoreValue(), metricdatatest.IgnoreExemplars())
 
 			metricdatatest.AssertEqual(t, metricdata.Metrics{
-				Name:        "http.server.request.duration",
-				Description: "Duration of HTTP server requests.",
-				Unit:        "s",
+				Name:        httpconv.ServerRequestDuration{}.Name(),
+				Description: httpconv.ServerRequestDuration{}.Description(),
+				Unit:        httpconv.ServerRequestDuration{}.Unit(),
 				Data: metricdata.Histogram[float64]{
 					Temporality: metricdata.CumulativeTemporality,
 					DataPoints: []metricdata.HistogramDataPoint[float64]{
@@ -572,7 +573,7 @@ func TestMetrics(t *testing.T) {
 						},
 					},
 				},
-			}, sm.Metrics[2], metricdatatest.IgnoreTimestamp(), metricdatatest.IgnoreValue(), metricdatatest.IgnoreExemplars())
+			}, sm.Metrics[1], metricdatatest.IgnoreTimestamp(), metricdatatest.IgnoreValue(), metricdatatest.IgnoreExemplars())
 		})
 	}
 }

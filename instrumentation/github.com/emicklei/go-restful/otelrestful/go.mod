@@ -5,6 +5,7 @@ go 1.23.0
 replace go.opentelemetry.io/contrib/propagators/b3 => ../../../../../propagators/b3
 
 require (
+	github.com/MrAlias/semconv-go v0.0.0-20250428185649-6433e8af74af
 	github.com/emicklei/go-restful/v3 v3.12.2
 	github.com/stretchr/testify v1.10.0
 	go.opentelemetry.io/contrib/propagators/b3 v1.35.0
