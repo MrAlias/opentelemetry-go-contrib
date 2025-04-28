@@ -14,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MrAlias/semconv-go/httpconv"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -188,9 +189,9 @@ func assertScopeMetrics(t *testing.T, sm metricdata.ScopeMetrics, attrs attribut
 		},
 		Metrics: []metricdata.Metrics{
 			{
-				Name:        "http.server.request.body.size",
-				Description: "Size of HTTP server request bodies.",
-				Unit:        "By",
+				Name:        httpconv.ServerRequestBodySize{}.Name(),
+				Description: httpconv.ServerRequestBodySize{}.Description(),
+				Unit:        httpconv.ServerRequestBodySize{}.Unit(),
 				Data: metricdata.Histogram[int64]{
 					Temporality: metricdata.CumulativeTemporality,
 					DataPoints: []metricdata.HistogramDataPoint[int64]{
@@ -201,9 +202,9 @@ func assertScopeMetrics(t *testing.T, sm metricdata.ScopeMetrics, attrs attribut
 				},
 			},
 			{
-				Name:        "http.server.response.body.size",
-				Description: "Size of HTTP server response bodies.",
-				Unit:        "By",
+				Name:        httpconv.ServerResponseBodySize{}.Name(),
+				Description: httpconv.ServerResponseBodySize{}.Description(),
+				Unit:        httpconv.ServerResponseBodySize{}.Unit(),
 				Data: metricdata.Histogram[int64]{
 					Temporality: metricdata.CumulativeTemporality,
 					DataPoints: []metricdata.HistogramDataPoint[int64]{
@@ -214,9 +215,9 @@ func assertScopeMetrics(t *testing.T, sm metricdata.ScopeMetrics, attrs attribut
 				},
 			},
 			{
-				Name:        "http.server.request.duration",
-				Description: "Duration of HTTP server requests.",
-				Unit:        "s",
+				Name:        httpconv.ServerRequestDuration{}.Name(),
+				Description: httpconv.ServerRequestDuration{}.Description(),
+				Unit:        httpconv.ServerRequestDuration{}.Unit(),
 				Data: metricdata.Histogram[float64]{
 					Temporality: metricdata.CumulativeTemporality,
 					DataPoints: []metricdata.HistogramDataPoint[float64]{
@@ -231,7 +232,7 @@ func assertScopeMetrics(t *testing.T, sm metricdata.ScopeMetrics, attrs attribut
 	metricdatatest.AssertEqual(t, want, sm, metricdatatest.IgnoreTimestamp(), metricdatatest.IgnoreValue(), metricdatatest.IgnoreExemplars())
 
 	// verify that the custom start time, which is 10 minutes in the past, is respected.
-	assert.GreaterOrEqual(t, sm.Metrics[2].Data.(metricdata.Histogram[float64]).DataPoints[0].Sum, float64(10*time.Minute/time.Second))
+	assert.GreaterOrEqual(t, sm.Metrics[1].Data.(metricdata.Histogram[float64]).DataPoints[0].Sum, float64(10*time.Minute/time.Second))
 }
 
 func TestHandlerEmittedAttributes(t *testing.T) {

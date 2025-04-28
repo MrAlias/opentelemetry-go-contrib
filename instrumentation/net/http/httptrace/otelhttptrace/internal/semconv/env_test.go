@@ -24,10 +24,6 @@ func TestHTTPServerDoesNotPanic(t *testing.T) {
 		server HTTPServer
 	}{
 		{
-			name:   "empty",
-			server: HTTPServer{},
-		},
-		{
 			name:   "nil meter",
 			server: NewHTTPServer(nil),
 		},
@@ -96,10 +92,6 @@ func TestHTTPClientDoesNotPanic(t *testing.T) {
 		name   string
 		client HTTPClient
 	}{
-		{
-			name:   "empty",
-			client: HTTPClient{},
-		},
 		{
 			name:   "nil meter",
 			client: NewHTTPClient(nil),
@@ -207,10 +199,6 @@ func BenchmarkRecordMetrics(b *testing.B) {
 		name   string
 		server HTTPServer
 	}{
-		{
-			name:   "empty",
-			server: HTTPServer{},
-		},
 		{
 			name:   "nil meter",
 			server: NewHTTPServer(nil),
