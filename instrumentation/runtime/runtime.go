@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/MrAlias/semconv-go/goconv"
+
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 
@@ -93,30 +94,30 @@ func Start(opts ...Option) error {
 			defer lock.Unlock()
 			collector.refresh()
 			stackMemory := collector.getInt(goHeapMemory)
-			o.ObserveInt64(memoryUsed.Inst(), stackMemory, stackMemoryOpt)
+			o.ObserveInt64(memoryUsed, stackMemory, stackMemoryOpt)
 			totalMemory := collector.getInt(goTotalMemory) - collector.getInt(goMemoryReleased)
 			otherMemory := totalMemory - stackMemory
-			o.ObserveInt64(memoryUsed.Inst(), otherMemory, otherMemoryOpt)
+			o.ObserveInt64(memoryUsed, otherMemory, otherMemoryOpt)
 			// Only observe the limit metric if a limit exists
 			if limit := collector.getInt(goMemoryLimit); limit != math.MaxInt64 {
-				o.ObserveInt64(memoryLimit.Inst(), limit)
+				o.ObserveInt64(memoryLimit, limit)
 			}
-			o.ObserveInt64(memoryAllocated.Inst(), collector.getInt(goMemoryAllocated))
-			o.ObserveInt64(memoryAllocations.Inst(), collector.getInt(goMemoryAllocations))
-			o.ObserveInt64(memoryGCGoal.Inst(), collector.getInt(goMemoryGoal))
-			o.ObserveInt64(goroutineCount.Inst(), collector.getInt(goGoroutines))
-			o.ObserveInt64(processorLimit.Inst(), collector.getInt(goMaxProcs))
-			o.ObserveInt64(configGogc.Inst(), collector.getInt(goConfigGC))
+			o.ObserveInt64(memoryAllocated, collector.getInt(goMemoryAllocated))
+			o.ObserveInt64(memoryAllocations, collector.getInt(goMemoryAllocations))
+			o.ObserveInt64(memoryGCGoal, collector.getInt(goMemoryGoal))
+			o.ObserveInt64(goroutineCount, collector.getInt(goGoroutines))
+			o.ObserveInt64(processorLimit, collector.getInt(goMaxProcs))
+			o.ObserveInt64(configGogc, collector.getInt(goConfigGC))
 			return nil
 		},
-		memoryUsed.Inst(),
-		memoryLimit.Inst(),
-		memoryAllocated.Inst(),
-		memoryAllocations.Inst(),
-		memoryGCGoal.Inst(),
-		goroutineCount.Inst(),
-		processorLimit.Inst(),
-		configGogc.Inst(),
+		memoryUsed,
+		memoryLimit,
+		memoryAllocated,
+		memoryAllocations,
+		memoryGCGoal,
+		goroutineCount,
+		processorLimit,
+		configGogc,
 	)
 	if err != nil {
 		return err
